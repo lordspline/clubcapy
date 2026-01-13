@@ -2,6 +2,8 @@ import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import cors from 'cors';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import {
   ServerToClientEvents,
   ClientToServerEvents,
@@ -13,22 +15,23 @@ import {
 import { PlayerManager } from './PlayerManager.js';
 import { RoomManager } from './RoomManager.js';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const app = express();
 const httpServer = createServer(app);
 
-const allowedOrigins = process.env.ALLOWED_ORIGINS 
-  ? process.env.ALLOWED_ORIGINS.split(',') 
-  : ['http://localhost:3000', 'http://localhost:5173'];
+const isProduction = process.env.NODE_ENV === 'production';
 
-app.use(cors({
-  origin: allowedOrigins,
-  credentials: true
-}));
+if (!isProduction) {
+  const allowedOrigins = ['http://localhost:3000', 'http://localhost:5173'];
+  app.use(cors({ origin: allowedOrigins, credentials: true }));
+}
 app.use(express.json());
 
 const io = new Server<ClientToServerEvents, ServerToClientEvents>(httpServer, {
-  cors: {
-    origin: allowedOrigins,
+  cors: isProduction ? undefined : {
+    origin: ['http://localhost:3000', 'http://localhost:5173'],
     methods: ['GET', 'POST'],
     credentials: true
   }
@@ -40,6 +43,14 @@ const roomManager = new RoomManager(io, playerManager);
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', players: playerManager.getAllPlayers().length });
 });
+
+if (isProduction) {
+  const clientPath = join(__dirname, '../../client/dist');
+  app.use(express.static(clientPath));
+  app.get('*', (req, res) => {
+    res.sendFile(join(clientPath, 'index.html'));
+  });
+}
 
 io.on('connection', (socket) => {
   console.log(`Socket connected: ${socket.id}`);

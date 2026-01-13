@@ -24,9 +24,9 @@ export class NetworkManager {
   private onErrorCallback?: (message: string) => void;
 
   private constructor() {
-    const serverUrl = import.meta.env.VITE_SERVER_URL || 'http://localhost:3001';
-    console.log('Connecting to server:', serverUrl);
-    this.socket = io(serverUrl, {
+    const serverUrl = import.meta.env.VITE_SERVER_URL || (import.meta.env.DEV ? 'http://localhost:3001' : '');
+    console.log('Connecting to server:', serverUrl || 'same origin');
+    this.socket = io(serverUrl || undefined, {
       autoConnect: false,
       transports: ['websocket', 'polling']
     });

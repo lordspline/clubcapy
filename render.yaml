@@ -1,11 +1,9 @@
 services:
   - type: web
-    name: clubcapy-server
+    name: clubcapy
     env: node
-    buildCommand: npm install && npm run build --workspace=shared && npm run build --workspace=server
-    startCommand: npm run start --workspace=server
+    buildCommand: npm install && npm run build
+    startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
-      - key: PORT
-        value: 3001

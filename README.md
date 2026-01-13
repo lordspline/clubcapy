@@ -98,37 +98,42 @@ npm run build
 
 ## Deployment
 
-Since this is a real-time multiplayer game using WebSockets, you need to deploy the client and server separately:
+The server serves the client in production, so you deploy everything as one app.
 
-### Server → Railway (recommended)
+### Railway (easiest)
 
-1. Create account at [railway.app](https://railway.app)
-2. Click "New Project" → "Deploy from GitHub repo"
-3. Select your `clubcapy` repository
-4. Add environment variable:
-   - `ALLOWED_ORIGINS`: `https://your-app.vercel.app` (your Vercel URL)
-5. Railway will auto-detect the `railway.json` and deploy
-6. Copy your Railway URL (e.g., `https://clubcapy-server.up.railway.app`)
+1. Go to [railway.app](https://railway.app) → "New Project" → "Deploy from GitHub"
+2. Select your `clubcapy` repo
+3. Railway auto-detects `railway.json` and deploys
+4. Done! Your app is live.
 
-### Client → Vercel
+### Render
 
-1. Create account at [vercel.com](https://vercel.com)
-2. Click "Add New" → "Project" → Import your GitHub repo
-3. Configure:
-   - **Root Directory**: `client`
-   - **Build Command**: `cd .. && npm install && npm run build --workspace=shared && npm run build --workspace=client`
-   - **Output Directory**: `dist`
-4. Add environment variable:
-   - `VITE_SERVER_URL`: Your Railway server URL (e.g., `https://clubcapy-server.up.railway.app`)
-5. Deploy!
+1. Go to [render.com](https://render.com) → "New" → "Web Service"
+2. Connect your GitHub repo
+3. Render uses `render.yaml` automatically
+4. Deploy!
 
-### Alternative: Render
+### Fly.io
 
-Server deployment with `render.yaml` included:
-1. Create account at [render.com](https://render.com)
-2. Click "New" → "Blueprint" → Connect your repo
-3. Render will use `render.yaml` configuration
-4. Add `ALLOWED_ORIGINS` env var with your Vercel URL
+```bash
+fly launch
+fly deploy
+```
+
+### VPS (Docker)
+
+```bash
+docker build -t clubcapy .
+docker run -p 3001:3001 clubcapy
+```
+
+Or without Docker:
+```bash
+npm install
+npm run build
+npm start
+```
 
 ## License
 
