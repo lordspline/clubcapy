@@ -43,8 +43,8 @@ export const PORTAL_ZONES: Record<string, Array<{ target: string; x: number; y: 
 
 export const ROOM_BOUNDS: Record<string, { minX: number; maxX: number; minY: number; maxY: number }> = {
   town: { minX: 50, maxX: 750, minY: 50, maxY: 550 },
-  beach: { minX: 50, maxX: 500, minY: 100, maxY: 550 },
-  forest: { minX: 100, maxX: 700, minY: 100, maxY: 500 }
+  beach: { minX: 50, maxX: 750, minY: 100, maxY: 550 },
+  forest: { minX: 100, maxX: 700, minY: 100, maxY: 550 }
 };
 
 export const MAX_CHAT_HISTORY = 50;
