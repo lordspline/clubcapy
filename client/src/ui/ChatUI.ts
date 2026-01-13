@@ -2,6 +2,7 @@ import { ChatMessage, MAX_CHAT_HISTORY, MAX_MESSAGE_LENGTH } from '@clubcapy/sha
 import { NetworkManager } from '../network/NetworkManager';
 
 export class ChatUI {
+  private static instance: ChatUI | null = null;
   private container: HTMLDivElement;
   private messagesDiv: HTMLDivElement;
   private input: HTMLInputElement;
@@ -12,13 +13,20 @@ export class ChatUI {
   private networkManager: NetworkManager;
   private inputFocused: boolean = false;
 
-  constructor(parentId: string) {
+  private constructor(parentId: string) {
     this.networkManager = NetworkManager.getInstance();
     
     const parent = document.getElementById(parentId);
     if (!parent) {
       throw new Error(`Parent element ${parentId} not found`);
     }
+
+    const existingIndicator = document.getElementById('room-indicator');
+    if (existingIndicator) existingIndicator.remove();
+    const existingCount = document.getElementById('player-count');
+    if (existingCount) existingCount.remove();
+    const existingContainer = document.getElementById('chat-container');
+    if (existingContainer) existingContainer.remove();
 
     this.roomIndicator = document.createElement('div');
     this.roomIndicator.id = 'room-indicator';
@@ -56,6 +64,13 @@ export class ChatUI {
 
     this.setupEventListeners();
     this.addSystemMessage('Welcome to ClubCapy! Use arrow keys to move.');
+  }
+
+  static getInstance(parentId: string = 'game-container'): ChatUI {
+    if (!ChatUI.instance) {
+      ChatUI.instance = new ChatUI(parentId);
+    }
+    return ChatUI.instance;
   }
 
   private setupEventListeners(): void {

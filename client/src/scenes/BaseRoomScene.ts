@@ -47,9 +47,7 @@ export abstract class BaseRoomScene extends Phaser.Scene {
   create(): void {
     this.networkManager = NetworkManager.getInstance();
     
-    if (!this.chatUI) {
-      this.chatUI = new ChatUI('game-container');
-    }
+    this.chatUI = ChatUI.getInstance('game-container');
     this.chatUI.setRoom(this.roomId);
 
     this.createBackground();
@@ -251,6 +249,10 @@ export abstract class BaseRoomScene extends Phaser.Scene {
   }
 
   shutdown(): void {
+    if (this.localPlayer) {
+      this.localPlayer.destroy();
+      this.localPlayer = undefined;
+    }
     this.remotePlayers.forEach(player => player.destroy());
     this.remotePlayers.clear();
     this.portals = [];

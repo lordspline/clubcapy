@@ -145,6 +145,6 @@ export class NetworkManager {
   }
 
   isConnected(): boolean {
-    return this.connected;
+    return this.socket.connected;
   }
 }
