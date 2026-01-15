@@ -52,4 +52,4 @@ export const MAX_MESSAGE_LENGTH = 200;
 export const PLAYER_SPEED = 150;
 export const GAME_WIDTH = 800;
 export const GAME_HEIGHT = 600;
-export const SPRITE_SIZE = 32;
+export const SPRITE_SIZE = 48;

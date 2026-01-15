@@ -29,6 +29,7 @@ export class Capybara extends Phaser.GameObjects.Container {
 
     this.sprite = scene.add.sprite(0, 0, 'capybara', 0);
     this.sprite.setOrigin(0.5, 0.5);
+    this.sprite.setScale(1.5);
     this.add(this.sprite);
 
     this.nameTag = scene.add.text(0, -SPRITE_SIZE / 2 - 10, playerName, {
@@ -67,8 +68,8 @@ export class Capybara extends Phaser.GameObjects.Container {
     const frameRows: Record<Direction, number> = {
       down: 0,
       up: 1,
-      left: 2,
-      right: 3
+      left: 3,
+      right: 2
     };
     const framesPerRow = 5;
 
