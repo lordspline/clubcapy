@@ -67,8 +67,8 @@ export class Capybara extends Phaser.GameObjects.Container {
     const frameRows: Record<Direction, number> = {
       down: 0,
       up: 1,
-      left: 2,
-      right: 3
+      left: 3,
+      right: 2
     };
     const framesPerRow = 5;
 
