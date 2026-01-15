@@ -70,6 +70,7 @@ export class Capybara extends Phaser.GameObjects.Container {
       left: 2,
       right: 3
     };
+    const framesPerRow = 5;
 
     directions.forEach(dir => {
       const row = frameRows[dir];
@@ -77,7 +78,7 @@ export class Capybara extends Phaser.GameObjects.Container {
       if (!scene.anims.exists(`idle-${dir}`)) {
         scene.anims.create({
           key: `idle-${dir}`,
-          frames: [{ key: 'capybara', frame: row * 4 }],
+          frames: [{ key: 'capybara', frame: row * framesPerRow }],
           frameRate: 1,
           repeat: -1
         });
@@ -87,10 +88,10 @@ export class Capybara extends Phaser.GameObjects.Container {
         scene.anims.create({
           key: `walk-${dir}`,
           frames: scene.anims.generateFrameNumbers('capybara', {
-            start: row * 4 + 1,
-            end: row * 4 + 3
+            start: row * framesPerRow,
+            end: row * framesPerRow + 4
           }),
-          frameRate: 8,
+          frameRate: 10,
           repeat: -1
         });
       }
