@@ -56,8 +56,17 @@ io.on('connection', (socket) => {
   console.log(`Socket connected: ${socket.id}`);
 
   socket.on('join', (payload) => {
-    const player = playerManager.createPlayer(socket.id, payload?.name);
-    roomManager.addPlayerToRoom(socket, player);
+    if (!payload?.name) {
+      socket.emit('error', 'Name is required');
+      return;
+    }
+
+    try {
+      const player = playerManager.createPlayer(socket.id, payload.name);
+      roomManager.addPlayerToRoom(socket, player);
+    } catch (error) {
+      socket.emit('error', error instanceof Error ? error.message : 'Failed to join');
+    }
   });
 
   socket.on('move', (payload: MovePayload) => {

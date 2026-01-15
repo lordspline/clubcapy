@@ -38,7 +38,7 @@ export interface ChangeRoomPayload {
 }
 
 export interface JoinPayload {
-  name?: string;
+  name: string;
 }
 
 export interface PlayerJoinedPayload {

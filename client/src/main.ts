@@ -20,7 +20,7 @@ const config: Phaser.Types.Core.GameConfig = {
       debug: false
     }
   },
-  scene: [BootScene, TownScene, BeachScene, ForestScene],
+  scene: [BootScene, StartScene, TownScene, BeachScene, ForestScene],
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH

@@ -59,12 +59,7 @@ export abstract class BaseRoomScene extends Phaser.Scene {
 
     this.setupNetworkHandlers();
 
-    if (!this.networkManager.isConnected()) {
-      this.networkManager.connect();
-      this.networkManager.socket.once('connect', () => {
-        this.networkManager.join();
-      });
-    } else if (this.localPlayerId && this.localPlayerName) {
+    if (this.localPlayerId && this.localPlayerName) {
       this.createLocalPlayer(this.localPlayerId, this.localPlayerName, this.spawnX, this.spawnY);
     }
   }
