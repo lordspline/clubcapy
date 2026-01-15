@@ -15,9 +15,11 @@
     "build": "npm run build --workspace=shared && npm run build --workspace=client && npm run build --workspace=server",
     "build:client": "npm run build --workspace=client",
     "build:server": "npm run build --workspace=server",
-    "start": "NODE_ENV=production node server/dist/index.js"
+    "start": "NODE_ENV=production node server/dist/index.js",
+    "generate-sprites": "node scripts/generate-sprites.js"
   },
   "devDependencies": {
+    "canvas": "^3.2.1",
     "concurrently": "^8.2.2",
     "typescript": "^5.3.3"
   }
