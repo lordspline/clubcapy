@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { Capybara } from '../entities/Capybara';
 import { NetworkManager } from '../network/NetworkManager';
 import { ChatUI } from '../ui/ChatUI';
+import { PortalIndicator } from '../ui/PortalIndicator';
 import {
   Player,
   RoomState,
@@ -81,6 +82,9 @@ export abstract class BaseRoomScene extends Phaser.Scene {
       (zone.body as Phaser.Physics.Arcade.Body).moves = false;
       
       this.portals.push({ zone, target: def.target });
+
+      const indicator = new PortalIndicator(this, def);
+      this.add.existing(indicator);
     });
   }
 
