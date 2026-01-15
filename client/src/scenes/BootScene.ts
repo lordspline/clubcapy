@@ -35,7 +35,9 @@ export class BootScene extends Phaser.Scene {
 
     this.load.spritesheet('capybara', 'assets/capybara.png', {
       frameWidth: 32,
-      frameHeight: 32
+      frameHeight: 32,
+      margin: 2,
+      spacing: 4
     });
 
     this.load.image('town', 'assets/rooms/town.png');
