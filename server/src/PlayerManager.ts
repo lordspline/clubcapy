@@ -4,24 +4,34 @@ interface PlayerData extends Player {
   socketId: string;
 }
 
-const adjectives = ['Happy', 'Sleepy', 'Chill', 'Cozy', 'Sunny', 'Lazy', 'Fluffy', 'Brave', 'Swift', 'Calm'];
-const nouns = ['Capy', 'Bara', 'Splash', 'Snoot', 'Bean', 'Mochi', 'Pudge', 'Nugget', 'Sprout', 'Bubble'];
+const NAME_REGEX = /^[a-zA-Z0-9_]{3,16}$/;
 
 export class PlayerManager {
   private players: Map<string, PlayerData> = new Map();
 
-  generateName(): string {
-    const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
-    const noun = nouns[Math.floor(Math.random() * nouns.length)];
-    const num = Math.floor(Math.random() * 9000) + 1000;
-    return `${adj}${noun}_${num}`;
+  isNameTaken(name: string): boolean {
+    const lowerName = name.toLowerCase();
+    for (const player of this.players.values()) {
+      if (player.name.toLowerCase() === lowerName) {
+        return true;
+      }
+    }
+    return false;
   }
 
-  createPlayer(socketId: string, name?: string): PlayerData {
+  createPlayer(socketId: string, name: string): PlayerData {
+    if (!NAME_REGEX.test(name)) {
+      throw new Error('Name must be 3-16 characters, letters, numbers, and underscores only');
+    }
+
+    if (this.isNameTaken(name)) {
+      throw new Error('Name is already taken');
+    }
+
     const player: PlayerData = {
       id: socketId,
       socketId,
-      name: name || this.generateName(),
+      name,
       x: 400,
       y: 300,
       direction: 'down' as Direction,

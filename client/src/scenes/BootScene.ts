@@ -45,6 +45,6 @@ export class BootScene extends Phaser.Scene {
 
   create(): void {
     Capybara.createAnimations(this);
-    this.scene.start('TownScene');
+    this.scene.start('StartScene');
   }
 }
