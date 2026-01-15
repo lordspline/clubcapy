@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { NetworkManager } from '../network/NetworkManager';
-import { GAME_WIDTH, GAME_HEIGHT, RoomState } from '@clubcapy/shared';
+import { GAME_WIDTH } from '@clubcapy/shared';
 
 const NAME_REGEX = /^[a-zA-Z0-9_]{3,16}$/;
 
@@ -193,7 +193,7 @@ export class StartScene extends Phaser.Scene {
       this.setLoading(false);
     });
 
-    this.networkManager.onRoomState((state: RoomState) => {
+    this.networkManager.onRoomState(() => {
       this.destroyOverlay();
       this.scene.start('TownScene', {
         playerId: this.networkManager.getSocketId(),

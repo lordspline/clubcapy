@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { BootScene } from './scenes/BootScene';
+import { StartScene } from './scenes/StartScene';
 import { TownScene } from './scenes/TownScene';
 import { BeachScene } from './scenes/BeachScene';
 import { ForestScene } from './scenes/ForestScene';
